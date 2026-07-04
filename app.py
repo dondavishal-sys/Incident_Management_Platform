@@ -1,10 +1,14 @@
 from fastapi import FastAPI
 import socket
 import time
+from prometheus_fastapi_instrumentator import Instrumentator
 
 app = FastAPI(title="DevOps Pipeline App")
 
 start_time = time.time()
+
+# Add Prometheus instrumentation
+Instrumentator().instrument(app).expose(app)
 
 @app.get("/")
 def home():
